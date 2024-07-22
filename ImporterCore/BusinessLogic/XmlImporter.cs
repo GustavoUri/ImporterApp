@@ -3,8 +3,12 @@ using ImporterDomain.Entities;
 
 namespace ImporterCore.BusinessLogic;
 
-public class XmlImporter : IImporter
+public class XmlImport : IImporter
 {
+    public XmlImport()
+    {
+    }
+
     public IConfiguration Import(string filePath)
     {
         var res = XDocument.Load(filePath);
