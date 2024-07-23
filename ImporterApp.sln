@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterApp", "ImporterApp\ImporterApp.csproj", "{72C2C086-D95B-4E4E-91D0-518E6C73DD11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterDomain", "ImporterDomain\ImporterDomain.csproj", "{2FA35047-7285-4B18-B5BD-B5CD10763356}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterCore", "ImporterCore\ImporterCore.csproj", "{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{72C2C086-D95B-4E4E-91D0-518E6C73DD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72C2C086-D95B-4E4E-91D0-518E6C73DD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72C2C086-D95B-4E4E-91D0-518E6C73DD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FA35047-7285-4B18-B5BD-B5CD10763356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FA35047-7285-4B18-B5BD-B5CD10763356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FA35047-7285-4B18-B5BD-B5CD10763356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FA35047-7285-4B18-B5BD-B5CD10763356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
