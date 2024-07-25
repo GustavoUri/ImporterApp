@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using ImporterCore.BusinessLogic;
+using ImporterCore.Interfaces;
 using ImporterCore.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,54 +19,51 @@ public static class Program
             .BuildServiceProvider();
         
         var files = Directory.GetFiles("../../../../FolderForReading");
-        
-        var fileContents = new List<FileInputModel>();
-        
+
+        watch.Start();
         Parallel.ForEach(files, (file) =>
         {
-            
-            var content = File.ReadAllText(file);
+            var content = ReadText(file);
+        
             var fileExtension = new FileInfo(file).Extension;
             var fileInputModel = new FileInputModel()
             {
                 Content = content,
                 Extension = fileExtension
             };
-            lock (fileContents)
-            {
-                fileContents.Add(fileInputModel);
-            }
+        
+            var importerService = serviceProvider.GetService<IConfigImporter>();
+            importerService.ImportConfig(fileInputModel);
         });
-        
-        var importerService = serviceProvider.GetService<IConfigImporter>();
-        watch.Start();
-        importerService.ImportConfigs(fileContents);
-        
-        // watch.Start();
-        // Parallel.ForEach(files, (file) =>
-        // {
-        //     var content = File.ReadAllText(file);
-        //     var fileExtension = new FileInfo(file).Extension;
-        //     var fileInputModel = new FileInputModel()
-        //     {
-        //         Content = content,
-        //         Extension = fileExtension
-        //     };
-        //     
-        //     var importerService = serviceProvider.GetService<IConfigImporter>();
-        //     importerService.ImportConfig(fileInputModel);
-        //     
-        // });
         
         var res = ConfigImporter.Configurations;
         foreach (var x in res)
         {
             Console.WriteLine(x.Name);
-            Console.Write(x.Description);
             Console.WriteLine("\n");
         }
         
         watch.Stop();
         Console.WriteLine(watch.Elapsed);
     }
+
+    public static string ReadText(string filePath)
+    {
+        using (var sourceStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        {
+            var sb = new StringBuilder();
+            var buffer = new byte[4096];
+            int numRead;
+
+            while ((numRead = sourceStream.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                var text = Encoding.UTF8.GetString(buffer, 0, numRead);
+                sb.Append(text);
+            }
+
+            return sb.ToString();
+        }
+    }
+
 }
+
