@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterDomain", "ImporterD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterCore", "ImporterCore\ImporterCore.csproj", "{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterTests", "ImporterTests\ImporterTests.csproj", "{BF129B90-090A-47D8-8610-94360A24CD08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCD37F60-8D9B-45B3-9C6F-DC1183051F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF129B90-090A-47D8-8610-94360A24CD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF129B90-090A-47D8-8610-94360A24CD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF129B90-090A-47D8-8610-94360A24CD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF129B90-090A-47D8-8610-94360A24CD08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

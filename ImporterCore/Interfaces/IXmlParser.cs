@@ -1,4 +1,4 @@
-﻿namespace ImporterCore.BusinessLogic;
+﻿namespace ImporterCore.Interfaces;
 
 public interface IXmlParser: IConfigParser
 {

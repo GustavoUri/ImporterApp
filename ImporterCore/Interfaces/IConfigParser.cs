@@ -1,8 +1,8 @@
 using ImporterDomain.Entities;
 
-namespace ImporterCore.BusinessLogic;
+namespace ImporterCore.Interfaces;
 
 public interface IConfigParser
 {
-    Configuration Parse(string fileContent);
+    IConfiguration Parse(string fileContent);
 }

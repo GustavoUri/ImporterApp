@@ -1,69 +1,72 @@
-﻿using System.Diagnostics;
-using System.Text;
-using ImporterCore.BusinessLogic;
+﻿using System.Text;
+using ImporterCore.Core;
 using ImporterCore.Interfaces;
 using ImporterCore.Models;
+using ImporterDomain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ImporterApp;
 
 public static class Program
 {
-    static void Main()
+    public static void Main()
     {
-        var watch = new Stopwatch();
         var serviceProvider = new ServiceCollection()
             .AddSingleton<IConfigImporter, ConfigImporter>()
             .AddScoped<IXmlParser, XmlConfigParser>()
-            .AddScoped<ICsvParser, CsvParser>()
+            .AddScoped<ICsvParser, CsvConfigParser>()
             .BuildServiceProvider();
-        
+
         var files = Directory.GetFiles("../../../../FolderForReading");
 
-        watch.Start();
+        var configurations = new List<IConfiguration>();
+
         Parallel.ForEach(files, (file) =>
         {
             var content = ReadText(file);
-        
+
             var fileExtension = new FileInfo(file).Extension;
             var fileInputModel = new FileInputModel()
             {
                 Content = content,
                 Extension = fileExtension
             };
-        
+
             var importerService = serviceProvider.GetService<IConfigImporter>();
-            importerService.ImportConfig(fileInputModel);
+            
+            lock (configurations)
+            {
+                configurations.Add(importerService.ImportConfig(fileInputModel));
+            }
         });
+
+        WriteConfigNames(configurations);
+    }
+
+    private static string ReadText(string filePath)
+    {
+        using var sourceStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         
-        var res = ConfigImporter.Configurations;
-        foreach (var x in res)
+        var sb = new StringBuilder();
+        var buffer = new byte[4096];
+        int numRead;
+
+        while ((numRead = sourceStream.Read(buffer, 0, buffer.Length)) != 0)
         {
-            Console.WriteLine(x.Name);
+            var text = Encoding.UTF8.GetString(buffer, 0, numRead);
+            sb.Append(text);
+        }
+
+        return sb.ToString();
+    }
+
+    private static void WriteConfigNames(List<IConfiguration> configs)
+    {
+        foreach (var config in configs)
+        {
+            Console.WriteLine($" Name: {config.Name}");
+            Console.WriteLine($" Description: {config.Description}");
             Console.WriteLine("\n");
         }
-        
-        watch.Stop();
-        Console.WriteLine(watch.Elapsed);
     }
-
-    public static string ReadText(string filePath)
-    {
-        using (var sourceStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-        {
-            var sb = new StringBuilder();
-            var buffer = new byte[4096];
-            int numRead;
-
-            while ((numRead = sourceStream.Read(buffer, 0, buffer.Length)) != 0)
-            {
-                var text = Encoding.UTF8.GetString(buffer, 0, numRead);
-                sb.Append(text);
-            }
-
-            return sb.ToString();
-        }
-    }
-
 }
-
