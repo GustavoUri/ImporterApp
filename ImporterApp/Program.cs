@@ -12,7 +12,7 @@ public static class Program
     public static void Main()
     {
         var serviceProvider = new ServiceCollection()
-            .AddSingleton<IConfigImporter, ConfigImporter>()
+            .AddScoped<IConfigImporter, ConfigImporter>()
             .AddScoped<IXmlParser, XmlConfigParser>()
             .AddScoped<ICsvParser, CsvConfigParser>()
             .BuildServiceProvider();
